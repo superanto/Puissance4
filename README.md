@@ -1,5 +1,7 @@
-##PUISSANCE 4 INTELLIGENT##
+***PUISSANCE 4 INTELLIGENT***
+
 par Anthony Boredon et Kahnvud Ching
+
 **Pour utiliser le jar directement comme éxécutable:**
 Lancer le fichier p4.jar directement en cliquant
 
