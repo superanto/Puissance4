@@ -8,7 +8,7 @@ import java.io.IOException;
 import gestionnaireStats.Statistiques;
 
 public class GslStatistiques extends Gsl {
-	// Classe pour sauvegarder ou charger les donnÃ©es Statistiques
+	/* Classe pour sauvegarder ou charger les données Statistiques*/
 
 	public GslStatistiques() {
 		this.gestionPlateau = null;
@@ -26,8 +26,8 @@ public class GslStatistiques extends Gsl {
 
 	public void lecture(File lec) {
 		/*
-		 * MÃ©thode dans lequel on ouvre et on lit un fichier texte pour
-		 * rÃ©cupÃ©rer les donnÃ©es utiles aux statistiques
+		 * Méthode dans lequel on ouvre et on lit un fichier texte pour
+		 * récupérer les données utiles aux statistiques
 		 */
 		String chaine = "";
 		int i = 0;
@@ -37,23 +37,23 @@ public class GslStatistiques extends Gsl {
 
 			FileReader fr = new FileReader(lec);
 			while (((ligne = fr.read()) != -1) && ((char) ligne != '\n')) {
-				// Ici on dÃ©place le curseur de lecture pour lire la 2Ã¨me ligne
+				/*Ici on déplace le curseur de lecture pour lire la deuxième ligne*/
 			}
 			while (((ligne = fr.read()) != -1)) {
 				chaine += (char) ligne;
 			}
 			fr.close();
 
-			// Compose le String crÃ©e en mot
+			/*Compose le String crée en mot*/
 			String[] splited = chaine.split(" ");
 
-			// parcourir les mots
+			/* parcourir les mots*/
 			for (String current : splited) {
 				tab[i] = Integer.parseInt(current);
 				i++;
 			}
 
-			// On affecte la valeur des 3 objets
+			/*On affecte la valeur des 3 objets*/
 			this.statsHvsM = new Statistiques(0);
 			this.statsHvsM.set_total(tab[0], tab[1], tab[2]);
 
@@ -70,8 +70,8 @@ public class GslStatistiques extends Gsl {
 
 	public void ecriture(File lec) {
 		/*
-		 * MÃ©thode dans lequel on ouvre et on Ã©crit dans un fichier texte pour
-		 * conserver les donnÃ©es utiles aux statistiques
+		 * Méthode dans lequel on ouvre et on écrit dans un fichier texte pour
+		 * conserver les données utiles aux statistiques
 		 */
 		String chaine = "";
 		try {
@@ -79,7 +79,7 @@ public class GslStatistiques extends Gsl {
 			int ligne;
 			FileReader fr = new FileReader(lec);
 			while (((ligne = fr.read()) != -1) && ((char) ligne != '\n')) {
-				// On ne va lire que la premiÃ¨re ligne qu'on affecte dans chaine
+				/*On ne va lire que la première ligne qu'on affecte dans chaine*/
 				chaine += (char) ligne;
 			}
 			chaine += " \n";
@@ -89,23 +89,23 @@ public class GslStatistiques extends Gsl {
 			System.out.println("Erreur de lecture de Statistiques !");
 		}
 
-		chaine += this.statsHvsM.get_victoire() + " " + this.statsHvsM.get_defaite() + this.statsHvsM.get_nb_parties()
-				+ " ";
-		chaine += this.statsMvsH.get_victoire() + " " + this.statsMvsH.get_defaite() + this.statsMvsH.get_nb_parties()
-				+ " ";
-		chaine += this.statsHvsH.get_victoire() + " " + this.statsHvsH.get_defaite() + this.statsHvsH.get_nb_parties();
+		chaine += this.statsHvsM.get_victoire() + " " + this.statsHvsM.get_defaite() + " "
+				+ this.statsHvsM.get_nb_parties() + " ";
+		chaine += this.statsMvsH.get_victoire() + " " + this.statsMvsH.get_defaite() + " "
+				+ this.statsMvsH.get_nb_parties() + " ";
+		chaine += this.statsHvsH.get_victoire() + " " + this.statsHvsH.get_defaite() + " "
+				+ this.statsHvsH.get_nb_parties();
 
 		FileWriter fw;
 
 		try {
-			// On Ã©crit dans le texte toute la chaine avec les nouvelles donnÃ©es
-			// Statistiques
+			/* On écrit dans le texte toute la chaine avec les nouvelles données Statistiques*/
 			fw = new FileWriter(lec);
 			fw.write(chaine);
 			fw.close();
 
 		} catch (IOException e) {
-			System.out.println("Erreur d'Ã©criture des Statistiques!");
+			System.out.println("Erreur d'écriture des Statistiques!");
 		}
 	}
 

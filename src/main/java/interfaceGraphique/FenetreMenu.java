@@ -12,12 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import gDC.GslPlateau;
+import gDC.GslStatistiques;
 import plateauDeJeu.Plateau;
 
 public class FenetreMenu extends JFrame implements ActionListener {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JPanel panel1;
 	private JButton lancerPartie;
@@ -43,6 +42,7 @@ public class FenetreMenu extends JFrame implements ActionListener {
 		lignePlateau = new JTextField();
 		colonnePlateau = new JTextField();
 
+		/* Affichage de la fenètre (JButton, JCheckBox, JTextField)*/
 		this.setTitle("Puissance 4");
 		this.setSize(520, 260);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -74,47 +74,56 @@ public class FenetreMenu extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 
+	/*Méthode qui détermine quoi faire lors du clique de chaque boutons*/
 	public void actionPerformed(ActionEvent e) {
-		int i, j;
+		int i = 0, j = 0;
 		Object source = e.getSource();
+		/*On lance la partie avec le type de partie que l'on a choisi à  l'aide des JCheckBox*/
 		if (source == lancerPartie) {
-			if (HvsM.isSelected()) {
+			if(!lignePlateau.getText().isEmpty() || !colonnePlateau.getText().isEmpty())
+			{
+			i = Integer.parseInt(lignePlateau.getText());
+			j = Integer.parseInt(colonnePlateau.getText());
+			}
+			/* 3 conditions dans le if pour éviter de lancer la partie en ayant séléctionner 
+			 * 2 ou 3 types de parties (ce qui est cens être impossible) et un plateau
+			 * minimum de 4x4 et un plateau maximum de 8x8*/
+			if (HvsM.isSelected() && !MvsH.isSelected() && !HvsH.isSelected()
+				&& i > 3 && j > 3 && i < 9 && j < 9) { 
 				this.dispose();
-				i = Integer.parseInt(lignePlateau.getText());
-				j = Integer.parseInt(colonnePlateau.getText());
 				Plateau temp = new Plateau(i, j);
 				temp.setTypePartie(1);
 				new FenetreJeu(temp);
 			}
-			if (MvsH.isSelected()) {
+			if (MvsH.isSelected() && !HvsM.isSelected() && !HvsH.isSelected()
+				&& i > 3 && j > 3 && i < 9 && j < 9) {
 				this.dispose();
-				i = Integer.parseInt(lignePlateau.getText());
-				j = Integer.parseInt(colonnePlateau.getText());
 				Plateau temp = new Plateau(i, j);
 				temp.setTypePartie(2);
 				new FenetreJeu(temp);
 			}
-			if (HvsH.isSelected()) {
+			if (HvsH.isSelected() && !HvsM.isSelected() && !MvsH.isSelected()
+				&& i > 3 && j > 3 && i < 9 && j < 9) {
 				this.dispose();
-				i = Integer.parseInt(lignePlateau.getText());
-				j = Integer.parseInt(colonnePlateau.getText());
 				Plateau temp = new Plateau(i, j);
 				temp.setTypePartie(3);
 				new FenetreJeu(temp);
 			}
 		}
+		/*Charge une partie qui à  été sauvegardé dans un fichier texte et lance la partie*/
 		if (source == chargerPartie) {
+			this.dispose();
 			Plateau temp = new Plateau();
 			GslPlateau aCharger = new GslPlateau(temp);
 			aCharger.charge();
 			new FenetreJeu(aCharger.getPlateau());
+			System.out.println("Partie Chargée !");
 		}
+		/*Charge le fichier texte afin de pouvoir lire et afficher les statistiques dans la fenetre de Statistiques*/
 		if (source == voirStatistiques) {
-			new FenetreStatistiques();
+			GslStatistiques aLire = new GslStatistiques();
+			aLire.charge();
+			new FenetreStatistiques(aLire.get_HM(), aLire.get_MH(), aLire.get_HH());
 		}
 	}
-
-	/*
-	 * public static void main(String[] args) { new FenetreMenu(); }
-	 */
 }

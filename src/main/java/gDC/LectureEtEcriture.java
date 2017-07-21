@@ -3,7 +3,7 @@ package gDC;
 import java.io.File;
 
 /*
- * Interface comprenant des mÃ©thodes Ã  dÃ©finir selon le type d'Ã©lÃ©ments que l'on souhaite 
+ * Interface comprenant des méthodes à  définir selon le type d'éléments que l'on souhaite 
  * sauvegarder ou charger
  */
 

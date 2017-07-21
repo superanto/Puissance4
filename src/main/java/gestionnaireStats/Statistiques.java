@@ -2,12 +2,9 @@ package gestionnaireStats;
 
 public class Statistiques {
 
-	public static final int HvsM = 0; // Type de partie oÃ¹ l'Homme commence
-										// contre la Machine
-	public static final int MvsH = 1; // Type de partie oÃ¹ l'Homme Ne commence
-										// pas contre la Machine
-	public static final int HvsH = 2; // Type de partie oÃ¹ deux Hommes
-										// s'affrontent
+	public static final int HvsM = 0; /* Type de partie où l'Homme commence contre la Machine*/
+	public static final int MvsH = 1; /*Type de partie où la machine commence contre l'Homme*/
+	public static final int HvsH = 2; /*Type de partie où deux Hommes s'affrontent*/
 
 	private int j1j2, victoire, defaite, nb_parties;
 
@@ -26,30 +23,23 @@ public class Statistiques {
 
 	public double ratio(int choix) {
 
-		if (choix == 0) {
-			return ((double) this.victoire / (double) this.nb_parties) * 100; // retourne
-			// pourcentage
-			// victoire sur
-			// nombres de
-			// parties
-		} else if (choix == 1) {
-			return ((double) this.defaite / (double) this.nb_parties) * 100; // retourne
-			// pourcentage
-			// dÃ©faite sur
-			// nombres de
-			// parties
-		} else {
-			// retourne pourcentage de matchs nuls sur le
-			// nombres de parties
+		if (choix == HvsM) {
+			return ((double) this.victoire / (double) this.nb_parties) * 100;
+			/* retourne pourcentage victoire sur nombres de parties*/
+		} 
+		else if (choix == MvsH) {
+			return ((double) this.defaite / (double) this.nb_parties) * 100; 
+			/* retourne pourcentage défaite sur nombres de parties*/
+			}
+		else {
+			/* retourne pourcentage match nul sur nombres de parties*/
 			return (((double) this.nb_parties - ((double) this.victoire + (double) this.defaite))
 					/ (double) this.nb_parties) * 100;
 		}
-
 	}
 
 	public int incrementation() {
 		return 0;
-
 	}
 
 	public int get_j1j2() {

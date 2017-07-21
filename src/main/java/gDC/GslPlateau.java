@@ -8,7 +8,7 @@ import java.io.IOException;
 import plateauDeJeu.Plateau;
 
 public class GslPlateau extends Gsl {
-	// Classe pour sauvegarder ou charger les donnÃ©es Plateau
+	/* Classe pour sauvegarder ou charger les données Plateau*/
 
 	public GslPlateau() {
 		this.gestionPlateau = null;
@@ -30,12 +30,12 @@ public class GslPlateau extends Gsl {
 
 	public void lecture(File lec) {
 		/*
-		 * MÃ©thode dans lequel on ouvre et on lit un fichier texte pour
-		 * rÃ©cupÃ©rer les donnÃ©es utiles au Plateau
+		 * Méthode dans laquel on ouvre et on lit un fichier texte pour
+		 * récupérer les données utiles au Plateau
 		 */
 
 		String chaine = "";
-		int i, j, position = 6;
+		int i, j, position = 10;
 
 		try {
 
@@ -51,13 +51,24 @@ public class GslPlateau extends Gsl {
 			System.out.println("Exception de type IOException");
 		}
 		if (chaine != null) {
-
-			int type = Character.getNumericValue(chaine.charAt(0));
-			int ligne = Character.getNumericValue(chaine.charAt(2));
-			int colonne = Character.getNumericValue(chaine.charAt(4));
+			
+			int victoire = Character.getNumericValue(chaine.charAt(0));
+			String nbTour2 = "";
+			int nbTour = Character.getNumericValue(chaine.charAt(2));			
+			if(chaine.charAt(3) != ' ')
+			{
+				nbTour2 = Character.toString(chaine.charAt(2)) + Character.toString(chaine.charAt(3));
+				nbTour = Integer.parseInt(nbTour2);
+				position = 11;
+			}
+			int type = Character.getNumericValue(chaine.charAt(position -6));
+			int ligne = Character.getNumericValue(chaine.charAt(position -4));
+			int colonne = Character.getNumericValue(chaine.charAt(position -2));
 			int tableau[][] = new int[ligne][colonne];
 			this.gestionPlateau = new Plateau(ligne, colonne);
 			this.gestionPlateau.setTypePartie(type);
+			this.gestionPlateau.setVictoire(victoire);
+			this.gestionPlateau.setNbTour(nbTour);
 
 			for (i = 0; i < ligne; i++) {
 				for (j = 0; j < colonne; j++) {
@@ -66,26 +77,26 @@ public class GslPlateau extends Gsl {
 				}
 			}
 			this.gestionPlateau.setTab(tableau);
-
 		}
-
 	}
 
 	public void ecriture(File lec) {
 		/*
-		 * MÃ©thode dans lequel on ouvre et on Ã©crit dans un fichier texte pour
-		 * conserver les donnÃ©es utiles au Plateau
+		 * Méthode dans lequel on ouvre et on écrit dans un fichier texte pour
+		 * conserver les données utiles au Plateau
 		 */
 
 		String chaine = "";
 		int i, j;
 		int ligne;
+		int v = this.gestionPlateau.getVictoire();
+		int n = this.gestionPlateau.getNbTour();
 		int t = this.gestionPlateau.getTypePartie();
 		int l = this.gestionPlateau.getLigne();
 		int c = this.gestionPlateau.getColonne();
 		int tabtemp[][] = this.gestionPlateau.getTab();
 		if (this.gestionPlateau != null) {
-			chaine = t + " " + l + " " + c;
+			chaine = v + " " + n + " " + t + " " + l + " " + c;
 			for (i = 0; i < l; i++) {
 				for (j = 0; j < c; j++) {
 					chaine += " " + tabtemp[i][j];
@@ -94,13 +105,13 @@ public class GslPlateau extends Gsl {
 		}
 		chaine += " \n";
 		/*
-		 * On Ã©crit dans le fichier le nombre de lignes, de colonnes et le
+		 * On écrit dans le fichier le nombre de lignes, de colonnes et le
 		 * tableau rempli de valeurs
 		 */
 		try {
 			FileReader fr = new FileReader(lec);
 			while (((ligne = fr.read()) != -1) && ((char) ligne != '\n')) {
-				// On dÃ©place le curseur
+				/*On déplace le curseur*/
 			}
 			while (((ligne = fr.read()) != -1)) {
 				chaine += (char) ligne;
@@ -119,7 +130,7 @@ public class GslPlateau extends Gsl {
 			System.out.println(chaine);
 
 		} catch (IOException e) {
-			System.out.println("Erreur d'Ã©criture !");
+			System.out.println("Erreur d'écriture !");
 		}
 
 	}
